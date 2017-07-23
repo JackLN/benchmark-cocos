@@ -1,5 +1,6 @@
 #include "BenchmarkEffect.h"
 #include "CustomEffectBase.h"
+#include "EffectEntity.h"
 
 BenchmarkEffect::BenchmarkEffect()
 : _layerDis(nullptr)
@@ -22,12 +23,20 @@ bool BenchmarkEffect::init()
 
     auto winSize = Director::getInstance()->getWinSize();
 
-    Sprite* pFoo = Sprite::create("test1.png");
-    pFoo->setPosition(winSize / 2);
-    _layerDis->addChild(pFoo);
-    
-    OuterGlowEffect* pGlow = OuterGlowEffect::create();
-    pGlow->setTarget(pFoo);
+	OuterGlowEffect* pGlow = OuterGlowEffect::create();
+
+
+	for (int i = 0; i < 100; i++)
+	{
+		EffectEntity* pFoo = EffectEntity::create("test1.png");
+		pFoo->setPosition(cocos2d::random(0.0f,winSize.width),cocos2d::random(0.0f,winSize.height));
+		_layerDis->addChild(pFoo);
+
+
+		pGlow->setTarget(pFoo);
+	}
+
+	
 
 
 
