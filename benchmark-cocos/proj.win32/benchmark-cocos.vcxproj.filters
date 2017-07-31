@@ -10,6 +10,15 @@
     <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\cocos-effectlib">
+      <UniqueIdentifier>{8c4a4ab6-ad3b-49db-99b0-faa0ae7ef2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{e698f1da-c27a-451e-a204-25f6996a8b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\demos">
+      <UniqueIdentifier>{5f40ea77-1f40-4a46-9344-45b0de9f6f75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +30,27 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\cocos-effectlib\BlurSprite.cpp">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cocos-effectlib\CustomEffectBase.cpp">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BenchmarkEffect.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cocos-effectlib\EffectEntity.cpp">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\cocos-effectlib\EffectManager.cpp">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CppUtils\PixelCollision.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\demos\CCImageDemo.cpp">
+      <Filter>src\demos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -31,6 +61,33 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cocos-effectlib\BlurSprite.h">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cocos-effectlib\CustomEffectBase.h">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BenchmarkEffect.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cocos-effectlib\EffectEntity.h">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\cocos-effectlib\EffectManager.h">
+      <Filter>src\cocos-effectlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CppUtils\ObjPool.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CppUtils\TSingleton.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CppUtils\PixelCollision.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\demos\CCImageDemo.h">
+      <Filter>src\demos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
