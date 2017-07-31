@@ -2,8 +2,6 @@
 
 
 
-
-
 Scene* ImageDemo::createScene()
 {
     auto scene = Scene::create();
@@ -30,8 +28,11 @@ bool ImageDemo::init()
     int iHeight = image->getHeight();
 
     unsigned char* pImgData = image->getData();
+    unsigned char* pTmpData = pImgData;
     int i;
     int j;
+
+    int iMaxOffset = 20;
 
     //change image buffer data
     for (i = 0; i < iWidth ; ++i)
@@ -39,15 +40,32 @@ bool ImageDemo::init()
         for (j = 0; j < iHeight; ++j)
         {
 
-            //GLubyte byteValue = *(pImgData += 3);
-            //pImgData++;
-            *(pImgData) = 255.0;
-            *(pImgData += 1) = 0.0;
-            *(pImgData += 1) = 0.0;
-            *(pImgData += 1) = 255.0;
-
+            GLubyte byteValue = *(pImgData += 3);
             pImgData++;
-            //cocos2d::log("%d", byteValue);
+            if (byteValue  == 255)
+                continue;
+
+            unsigned char* tmpStart = pImgData - 4;
+            int iStartX = std::max(0,i - iMaxOffset);
+            int iEndX = std::min(i + iMaxOffset, iWidth);
+            int iStartY = std::max(0, j - iMaxOffset);
+            int iEndY = std::min(j + iMaxOffset, iHeight);
+
+            int iAlpha = 0;
+
+            for (int m = iStartX; m < iEndX; ++m)
+            {
+                for (int n = iStartY; n < iEndY; ++n)
+                {
+                    iAlpha += *(pTmpData +( m*iWidth + n)*4 + 3);
+                    log("%d", iAlpha);
+                }
+            }
+
+            iAlpha = iAlpha / (iEndY - iStartY) / (iEndX - iStartX);
+            
+            *(pImgData - 1) = iAlpha;
+            //*(pImgData - 2) = 255;
 
         }
     }
@@ -58,6 +76,8 @@ bool ImageDemo::init()
     auto pSprite = Sprite::createWithTexture(tex);
     pSprite->setPosition(winSize / 2);
     addChild(pSprite);
+
+
 
     return true;
 }
