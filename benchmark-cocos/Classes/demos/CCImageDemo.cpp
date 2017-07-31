@@ -15,6 +15,9 @@ bool ImageDemo::init()
     if (!Layer::init())
         return false;
 
+	auto pLayerColor = LayerColor::create(Color4B::BLACK);
+	addChild(pLayerColor);
+
     auto winSize = Director::getInstance()->getWinSize();
     auto originRect = Director::getInstance()->getVisibleOrigin();
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -33,6 +36,8 @@ bool ImageDemo::init()
     int j;
 
     int iMaxOffset = 20;
+
+	//GLubyte byteValue = *(pImgData + (70*155+70)*4 + 3);
 
     //change image buffer data
     for (i = 0; i < iWidth ; ++i)
@@ -57,27 +62,37 @@ bool ImageDemo::init()
             {
                 for (int n = iStartY; n < iEndY; ++n)
                 {
-                    iAlpha += *(pTmpData +( m*iWidth + n)*4 + 3);
-                    log("%d", iAlpha);
+					int iAlphaTmp = *(pTmpData + (m*iWidth + n) * 4 + 3);
+                    //iAlpha += 
+					iAlpha += iAlphaTmp;
+					//if (iAlphaTmp > 0)
+						//log("%d", iAlphaTmp);
+                    
                 }
             }
 
-            iAlpha = iAlpha / (iEndY - iStartY) / (iEndX - iStartX);
+            iAlpha = iAlpha / ((iEndY - iStartY) * (iEndX - iStartX));
+
+			//float fTmp = (float)iAlpha / 255.0f;
             
-            *(pImgData - 1) = iAlpha;
-            //*(pImgData - 2) = 255;
+			*(pImgData - 1) = iAlpha;
+			*(pImgData - 2) = 255;
+			*(pImgData - 3) = 0;
+			*(pImgData - 4) = 0;
 
         }
     }
 
     //create texture & sprite
     Texture2D* tex = new Texture2D();
-    tex->initWithImage(image);
+	tex->initWithData(image->getData(), image->getDataLen(), Texture2D::PixelFormat::RGBA8888, iWidth, iHeight, CCSize(iWidth, iHeight));
     auto pSprite = Sprite::createWithTexture(tex);
     pSprite->setPosition(winSize / 2);
-    addChild(pSprite);
+    pLayerColor->addChild(pSprite);
 
-
+	auto pSprite2 = Sprite::create("test1.png");
+	pSprite2->setPosition(winSize.width/2 + 200,winSize.height/2);
+	pLayerColor->addChild(pSprite2);
 
     return true;
 }
