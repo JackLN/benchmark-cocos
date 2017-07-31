@@ -15,3 +15,5 @@
 *.suo
 *.opensdf
 *.exp
+
+benchmark-cocos/proj.win32/Debug.win32/*
