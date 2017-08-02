@@ -1,5 +1,6 @@
 #include "CCImageDemo.h"
 #include "CustomEffectBase.h"
+#include "EffectEntity.h"
 
 
 Scene* ImageDemo::createScene()
@@ -34,7 +35,7 @@ bool ImageDemo::init()
 
     //target data
     unsigned char* pTarData = (unsigned char*)(malloc(iDataLen * sizeof(unsigned char)));
-    //memset(pTarData,0,iDataLen * sizeof(unsigned char));
+    memset(pTarData,0,iDataLen * sizeof(unsigned char));
 
     //change image buffer data
     int i;
@@ -116,44 +117,51 @@ bool ImageDemo::init()
         }
     }
 
-    //copy image data
+    ////copy image data
     memcpy(image->getData(), pTarData, image->getDataLen());
     CC_SAFE_FREE(pTarData);
 
     //create texture & sprite
-    /*Texture2D* tex = new Texture2D();
-    tex->initWithData(image->getData(), image->getDataLen(), Texture2D::PixelFormat::RGBA8888, iWidth, iHeight, CCSize(iWidth, iHeight));*/
-
-    auto tex = Director::getInstance()->getTextureCache()->addImage("test1.png");
+    Texture2D* tex = new Texture2D();
+    tex->initWithData(image->getData(), image->getDataLen(), Texture2D::PixelFormat::RGBA8888, iWidth, iHeight, CCSize(iWidth, iHeight));
+    //tex->initWithImage(image);
+    //auto tex = Director::getInstance()->getTextureCache()->addImage("test1.png");
     auto pSprite = Sprite::createWithTexture(tex);
     pSprite->setPosition(winSize / 2);
-    pLayerColor->addChild(pSprite);
+    pLayerColor->addChild(pSprite,100);
 
-    //auto pEffectGlow = OuterGlowTex::create();
+    auto pEffectGlow = OuterGlowTex::create();
     
 
-    //for (i = 0; i < 100;i++)
-    //{
-    //    Vec2 pos(cocos2d::random(0.0f, winSize.width), cocos2d::random(0.0f, winSize.height));
+    for (int i = 0; i < 100;i++)
+    {
+        Vec2 pos(cocos2d::random(0.0f, winSize.width), cocos2d::random(0.0f, winSize.height));
 
-    //    auto pSprite2 = Sprite::create("test1.png");
-    //    pSprite2->setPosition(pos);
-    //    pLayerColor->addChild(pSprite2);
+        auto pSprite2 = Sprite::create("test1.png");
+        pSprite2->setPosition(pos);
+        pLayerColor->addChild(pSprite2,200);
 
-    //    
-    //    auto pSprite = Sprite::createWithTexture(tex);
-    //    pSprite->setPosition(pSprite2->getContentSize()/2);
-    //    pSprite2->addChild(pSprite);
-    //    //pEffectGlow->setTarget(pSprite);
-    //}
+        auto pMove = MoveBy::create(1.0, Vec2(cocos2d::random(-100, 100), cocos2d::random(-50, 50)));
+        auto pMoveBak = pMove->reverse();
+        auto pSeq = Sequence::createWithTwoActions(pMove, pMoveBak);
+        pSprite2->runAction(RepeatForever::create(pSeq));
 
-    //pEffectGlow->setGlowColor(Color4F(1.0f,0.85f,0.74f,1.0f));
-    //pEffectGlow->setTarget(pSprite);
+        auto pSprite = EffectEntity::createWithTexture(tex);
+        pSprite->setPosition(pSprite2->getPosition());
+        pLayerColor->addChild(pSprite, 100);
+        pEffectGlow->setTarget(pSprite);
 
+        auto pMove2 = pMove->clone();
+        pSprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(pMove2, pMove2->reverse())));
+    }
+
+    
+    pEffectGlow->setTarget(pSprite);
+    pEffectGlow->setGlowColor(Color4F(1.0f, 0.85f, 0.74f, 1.0f));
     //sprite
-    /*auto pSprite2 = Sprite::create("test1.png");
-    pSprite2->setPosition(winSize/2);
-    pLayerColor->addChild(pSprite2);*/
+    auto pSprite2 = Sprite::create("test1.png");
+    pSprite2->setPosition(winSize / 2);
+    pLayerColor->addChild(pSprite2, 200);
 
 
     /*auto pSprite3 = Sprite::create("test1.png");
