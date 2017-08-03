@@ -16,9 +16,9 @@ bool BenchmarkEffect::init()
 {
     if (!Scene::init())
         return false;
-    
 
-    _layerDis = LayerColor::create(Color4B::BLACK);
+
+   /* _layerDis = LayerColor::create(Color4B::BLACK);
     addChild(_layerDis);
 
     auto winSize = Director::getInstance()->getWinSize();
@@ -40,7 +40,7 @@ bool BenchmarkEffect::init()
     pGlow->setTarget(tmpSp);
     tmpSp->visit();
     pRender->end();
-    pRender->saveToFile("Outer.png", cocos2d::Image::Format::PNG);
+    pRender->saveToFile("Outer.png", cocos2d::Image::Format::PNG);*/
 
    /* Rect origin = pFoo->getBoundingBox();
     auto pRender = RenderTexture::create(winSize.width, winSize.height, kCCTexture2DPixelFormat_RGBA8888);
@@ -48,6 +48,14 @@ bool BenchmarkEffect::init()
     pFoo->visit();
     pRender->end();
     pRender->saveToFile("Outer.png", cocos2d::Image::Format::PNG);*/
+
+    auto winSize = Director::getInstance()->getWinSize();
+    auto originRect = Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    auto pEntity = GrayEntity::create("test1.png");
+    pEntity->setPosition(winSize / 2);
+    addChild(pEntity);
 
     return true;
 }
